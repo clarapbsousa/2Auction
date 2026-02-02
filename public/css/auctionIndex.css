@@ -1,0 +1,253 @@
+.auction-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 1.5rem; 
+    color: #101012;
+    background-color: #f9f9f9;
+    width: 60rem; 
+    min-height: 12rem;
+    font-size: 1.1rem; 
+    line-height: 1.6; 
+    gap: 1.5rem; 
+    padding: 1.5em; 
+    border: 0.0625rem solid #ddd;
+    border-radius: 0.5rem; 
+    box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1); 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auction-container:hover {
+    transform: translateY(-0.3125rem); 
+    box-shadow: 0 0.5rem 0.9375rem rgba(0, 0, 0, 0.15); 
+}
+
+.auction-container img {
+    width: 10rem; 
+    height: 10rem; 
+    border-radius: 0.5rem; 
+    object-fit: cover;
+    border: 0.125rem solid #ccc; 
+}
+
+.auction-container div {
+    display: flex;
+    flex-direction: column;
+    width: 100%; 
+    height: 100%;
+}
+
+/* Informação do leilão */
+.auction-info {
+    justify-content: space-evenly;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    word-wrap: break-word; 
+}
+
+.auction-info p {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.auction-info .description {
+    font-size: 1rem;
+    color: #555;
+    overflow-wrap: break-word; 
+    max-height: 8rem;
+    overflow: auto; 
+}
+
+/* Deadline */
+.deadline {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #027782;
+    justify-content: end;
+    margin-bottom: 0.5rem;
+}
+
+/* Links dos leilões */
+a.auction-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    width: 100%;
+}
+
+
+/*Pagination*/
+
+.no-search {
+    color: #666;
+    text-align: center;
+    margin-top: 1.5em;
+    font-size: 2.5rem; 
+}
+
+.seller-profile {
+    color: #101012;
+    padding: 2rem;
+    margin: auto;
+    max-width: 1200px;
+}
+
+.seller-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border: 0.0625rem solid #ddd;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
+}
+
+.seller-details-img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 0.125rem solid #ccc;
+    margin-bottom: 1rem;
+}
+
+.seller-details h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.seller-details p {
+    font-size: 1.2rem;
+    margin: 0.3rem 0;
+}
+
+.two-column-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* Botão padrão */
+button {
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    justify-content: center; 
+    width: 26em;
+    height: 2.4em;
+    font-size: 1.4em;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: #027782;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1em;
+}
+
+button::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+    transform: skewX(-45deg);
+    transition: all 0.5s ease;
+    z-index: 0;
+}
+
+button:hover{
+  background: #027782;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
+  color: #FFFFFF;
+}
+
+button::before:hover{
+    left: 100%;
+}
+
+.bid {
+    display: flex;
+    justify-content: space-between; /* Espaça igualmente os botões */
+    gap: 10px; /* Espaço entre os botões */
+}
+
+/* Botões de Rate e Report */
+.bid button {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+
+
+/* Mensagens de Sucesso e Erro */
+.alert {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    font-size: 1rem;
+    transition: opacity 0.5s ease;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 0.0625rem solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 0.0625rem solid #f5c6cb;
+}
+
+@media (max-width: 768px) {
+    .two-column-list {
+        display: flex;
+        flex-wrap: wrap; 
+        justify-content: center;
+        align-items: center; 
+        gap: 1rem; 
+    }
+
+    .auction-container {
+        width: 95%; 
+        max-width: 350px; 
+        flex-direction: column;
+        padding: 1rem; 
+        margin: 0 auto; 
+    }
+
+    .auction-container img {
+        width: 100%; 
+        height: auto;
+    }
+
+    .auction-info {
+        font-size: 1rem;
+        text-align: center; 
+    }
+
+    .deadline {
+        font-size: 0.9rem;
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center; 
+        margin: 0; 
+        font-size: 0.8rem; 
+    }
+}

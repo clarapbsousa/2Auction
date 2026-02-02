@@ -1,0 +1,1165 @@
+openapi: 3.0.2
+
+info:
+  version: '1.0'
+  title: 'LBAW 2Auction Web API'
+  description: 'Web Resources Specification for 2Auction'
+
+servers:
+- url: http://lbaw.fe.up.pt
+  description: Production server
+
+externalDocs:
+  description: Find more info here.
+  url: https://web.fe.up.pt/~ssn/wiki/teach/lbaw/medialib/a07
+
+tags:
+  - name: 'M01: Authentication and Individual Profile'
+  - name: 'M02: Auctions and Categories'
+  - name: 'M03: Bids'
+  - name: 'M04: Topups'
+  - name: 'M05: Static Pages'
+  - name: 'M06: Administration'
+  
+paths:
+  /login:
+    get:
+      operationId: R101
+      summary: "R101: Login Form"
+      description: "Provide Login Form. Access: PUB"
+      tags:
+        - "M01: Authentication and Individual Profile"
+      responses:
+        '200':
+          description: "Successfully returns the login page view."
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "<html><head><title>Login</title></head><body>Formulário de Login</body></html>"
+    post:
+      operationId: R102
+      summary: "R102: Login Action."
+      description: "Processes the Login form, validating user credentials. If valid, logs the user in. If the user is banned, logs them out and returns an error. Access: PUB"
+      tags:
+        - "M01: Authentication and Individual Profile"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: "user email"
+                password:
+                  type: string
+                  format: password
+                  description: "user password"
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: "Authenticated, redirects to intended page."
+        '302':
+          description: "Redirects to homepage."
+        '400':
+          description: Validation error on input data.
+        '401':
+          description: Invalid credentials or banned user.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    description: Error message regarding invalid credentials or banned account.
+        '500':
+          description: Internal server error.
+
+
+  /logout:
+    get:
+      operationId: R103
+      summary: 'R103: Logout Action'
+      description: 'Logout the current authenticated used, redirects to the login page. Access: USR, ADM'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: Successfully logged out, redirects to the login page with a success message.
+          content:
+            text/html:
+              schema:
+                type: string
+        '500':
+          description: Internal server error.
+
+
+  /register:
+    get:
+      operationId: R104
+      summary: 'R104: Register Form'
+      description: 'Provide new user registration form. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: Successfully returns the registration page view.
+          content:
+            text/html:
+              schema:
+                type: string
+
+    post:
+      operationId: R105
+      summary: 'R105: Register Action'
+      description: 'Processes the new user registration form submission. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: User's full name.
+                  maxLength: 250
+                email:
+                  type: string
+                  format: email
+                  description: User's email address.
+                  maxLength: 250
+                password:
+                  type: string
+                  format: password
+                  description: User's password.
+                  minLength: 8
+                password_confirmation:
+                  type: string
+                  format: password
+                  description: Confirmation of the user's password.
+              required:
+                - name
+                - email
+                - password
+                - password_confirmation
+      responses:
+        '200':
+          description: Successfully registered and logged in, redirects to the home page with a success message.
+        '400':
+          description: Validation error due to incorrect or missing input.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "The given data was invalid."
+                  errors:
+                    type: object
+                    properties:
+                      name:
+                        type: array
+                        items:
+                          type: string
+                      email:
+                        type: array
+                        items:
+                          type: string
+                      password:
+                        type: array
+                        items:
+                          type: string
+        '409':
+          description: Email already exists in the system.
+        '500':
+          description: Internal server error.
+
+
+  /profile:
+    get:
+      operationId: R106
+      summary: "R106: Display the user profile page"
+      description: "Returns a profile page depending on the user's role. Admins will see a page with statistics, and regular users will see their personal profile page. If the user is not authenticated, they are redirected to the home page with a message. Access: OWN"
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: Successfully returns the appropriate profile page view.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Redirects to the home page if the user is not authenticated, with a "no permissions" message.
+          content:
+            text/html:
+              schema:
+                type: string
+        '403':
+          description: The user is not authorized to access the profile page (if their role is not admin and other conditions are unmet).
+        '500':
+          description: Internal server error.
+
+  /profile/edit:
+    get:
+      summary: "R107: Edit Profile Page"
+      description: "Displays the profile edit page where the authenticated user can update their information. Access: OWN"
+      operationId: R107
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: Successfully displays the profile edit page.
+          content:
+            text/html:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized access if the user is not authenticated.
+
+  /profile/{id}:
+    put:
+      summary: "R108: Update User Profile"
+      description: "Updates the specified user's profile information, including their name, username, email, and profile picture. Access: OWN"
+      operationId: R108
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the user to update.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The user's name.
+                  maxLength: 255
+                username:
+                  type: string
+                  description: The user's unique username.
+                  maxLength: 255
+                email:
+                  type: string
+                  description: The user's unique email address.
+                  maxLength: 255
+                  format: email
+                imagepath:
+                  type: string
+                  format: binary
+                  description: The user's profile picture (optional). Must be a valid image file (jpeg, png, jpg) with a maximum size of 2MB.
+              required:
+                - name
+                - username
+                - email
+      responses:
+        '200':
+          description: Successfully updated the user profile.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Perfil atualizado com sucesso!"
+        '400':
+          description: Validation error due to incorrect or missing input data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "The given data was invalid."
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '404':
+          description: User not found.
+        '401':
+          description: Unauthorized access if the user is not authenticated.
+        '500':
+          description: Internal server error.
+
+  /view-history:
+    get:
+      summary: "R109: View user activity and active auctions. Access: USR"
+      description: Retrieves the activity of the logged-in user, including their bids and created auctions, along with their active auctions.
+      operationId: R109
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: A list of the user's activity and active auctions.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  activities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                        itemname:
+                          type: string
+                        details:
+                          type: string
+                        date:
+                          type: string
+                  activeAuctions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        itemname:
+                          type: string
+                        currentprice:
+                          type: number
+                        deadline:
+                          type: string
+              example:
+                activities:
+                  - type: "Bid"
+                    itemname: "Item Name"
+                    details: "Bid value: 100"
+                    date: "2024-11-25T12:00:00Z"
+                  - type: "Auction"
+                    itemname: "Item Name"
+                    details: "Auction: Item Name"
+                    date: "2024-11-20T12:00:00Z"
+                activeAuctions:
+                  - itemname: "Active Item"
+                    currentprice: 150
+                    deadline: "2024-12-01T12:00:00Z"
+
+  /full-activity:
+    get:
+      summary: "R110: View full user activity"
+      description: Retrieves a comprehensive list of the logged-in user's bids and auctions they have created.
+      operationId: R110
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: A list of the user's full activity.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  activities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                        itemname:
+                          type: string
+                        details:
+                          type: string
+                        date:
+                          type: string
+              example:
+                activities:
+                  - type: "Bid"
+                    itemname: "Item Name"
+                    details: "Bid value: 100"
+                    date: "2024-11-25T12:00:00Z"
+                  - type: "Auction"
+                    itemname: "Item Name"
+                    details: "Auction: Item Name"
+                    date: "2024-11-20T12:00:00Z"
+
+  /active-auctions:
+    get:
+      summary: "R111: View active auctions the user has participated in"
+      description: "Retrieves a list of active auctions that the logged-in user has participated in. Access: USR"
+      operationId: R111
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: A list of active auctions.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  activeAuctions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        itemname:
+                          type: string
+                        currentprice:
+                          type: number
+                        deadline:
+                          type: string
+              example:
+                activeAuctions:
+                  - itemname: "Active Item"
+                    currentprice: 150
+                    deadline: "2024-12-01T12:00:00Z"
+
+  /my-active-auctions:
+    get:
+      summary: "R112: View auctions created by the user"
+      description: "Retrieves a list of active auctions created by the logged-in user, including bid count and details."
+      operationId: R112
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: A list of the user's active auctions.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  myActiveAuctions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        itemname:
+                          type: string
+                        currentprice:
+                          type: number
+                        bid_count:
+                          type: integer
+                        deadline:
+                          type: string
+              example:
+                myActiveAuctions:
+                  - id: 1
+                    itemname: "Auction Item"
+                    currentprice: 150
+                    bid_count: 5
+                    deadline: "2024-12-01T12:00:00Z"
+  /categories:
+    get:
+      summary: "R201: Get All Categories"
+      description: "Retrieves all categories available in the system. Access: PUB"
+      operationId: R201
+      tags:
+        - 'M02: Auctions and Categories'
+      responses:
+        '200':
+          description: List of all categories.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The unique ID of the category.
+                    name:
+                      type: string
+                      description: The name of the category.
+                    description:
+                      type: string
+                      description: The description of the category.
+                  example:
+                    id: 1
+                    name: Electronics
+                    description: Devices and gadgets.
+        '500':
+          description: Internal server error.
+  /fetch-subcategories:
+    get:
+      summary: "R203: Fetch Subcategories for a Category"
+      description: "Retrieves subcategories for a specified category ID. Access: PUB"
+      operationId: R203
+      tags:
+        - 'M02: Auctions and Categories'
+      parameters:
+        - name: category_id
+          in: query
+          required: true
+          description: The ID of the category for which subcategories need to be fetched.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of subcategories for the specified category.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The unique ID of the subcategory.
+                    name:
+                      type: string
+                      description: The name of the subcategory.
+                    description:
+                      type: string
+                      description: The description of the subcategory.
+                    category_id:
+                      type: integer
+                      description: The ID of the parent category.
+                  example:
+                    id: 10
+                    name: Smartphones
+                    description: Mobile phones with advanced features.
+                    category_id: 1
+        '400':
+          description: Invalid or missing category ID.
+        '404':
+          description: No subcategories found for the provided category ID.
+        '500':
+          description: Internal server error.
+          
+  /:
+    get:
+      summary: "R204: Get All Categories - Display on homepage"
+      description: "Displays a homepage with a random selection of auctions and categories. Access: PUB"
+      operationId: R204
+      tags:
+        - 'M02: Auctions and Categories'
+      responses:
+        '200':
+          description: Successful response with homepage data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  auctions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Auction ID.
+                        itemname:
+                          type: string
+                          description: Item name in the auction.
+                        currentprice:
+                          type: number
+                          description: Current price of the auction item.
+                  categories:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Category ID.
+                        name:
+                          type: string
+                          description: Category name.
+
+  /auctions:
+    get:
+      summary: "R205: List Auctions"
+      description: "Retrieves a list of all auctions, with optional filters for search, categories, and subcategories. Access: PUB"
+      operationId: R205
+      tags:
+        - 'M02: Auctions and Categories'
+      parameters:
+        - name: q
+          in: query
+          description: Search term for item names.
+          schema:
+            type: string
+        - name: category
+          in: query
+          description: Filter by category ID.
+          schema:
+            type: integer
+        - name: subcategory
+          in: query
+          description: Filter by subcategory ID.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response with a list of auctions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: Auction ID.
+                    itemname:
+                      type: string
+                      description: Auction item name.
+                    currentprice:
+                      type: number
+                      description: Current price of the auction item.
+                    description:
+                      type: string
+                      description: Auction description.
+
+  /auction/{id}:
+    get:
+      summary: "R206: Get Auction Details"
+      description: "Retrieves details of a specific auction. Access: PUB"
+      operationId: R206
+      tags:
+        - 'M02: Auctions and Categories'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the auction to retrieve.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response with auction details.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Auction ID.
+                  itemname:
+                    type: string
+                    description: Auction item name.
+                  currentprice:
+                    type: number
+                    description: Current price of the auction item.
+                  description:
+                    type: string
+                    description: Auction description.
+                  seller:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: Seller ID.
+                      name:
+                        type: string
+                        description: Seller name.
+                  bidsCount:
+                    type: integer
+                    description: Number of bids on the auction.
+
+  /auction/create:
+    get:
+      summary: "R207: Create Auction Page"
+      description: "Returns the view for creating a new auction. Access: USR"
+      operationId: R207
+      tags:
+        - 'M02: Auctions and Categories'
+      responses:
+        '200':
+          description: HTML form for creating a new auction.
+
+  /auction/store:
+    post:
+      summary: "R208: Create Auction"
+      description: "Creates a new auction. Access: USR"
+      operationId: R208
+      tags:
+        - 'M02: Auctions and Categories'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                itemname:
+                  type: string
+                  description: Item name.
+                startingPrice:
+                  type: number
+                  description: Starting price.
+                increment:
+                  type: number
+                  description: Minimum increment for bids.
+                deadLine:
+                  type: string
+                  format: date-time
+                  description: Auction deadline.
+                subcategory:
+                  type: integer
+                  description: Subcategory ID.
+                description:
+                  type: string
+                  description: Auction description.
+      responses:
+        '201':
+          description: Auction created successfully.
+        '400':
+          description: Invalid input or validation error.
+
+  /auction/update/{id}:
+    put:
+      summary: "R209: Update Auction"
+      description: "Updates the details of an existing auction. Access: OWN"
+      operationId: R209
+      tags:
+        - 'M02: Auctions and Categories'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the auction to update.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currentprice:
+                  type: number
+                  description: Updated current price.
+                description:
+                  type: string
+                  description: Updated auction description.
+      responses:
+        '200':
+          description: Auction updated successfully.
+        '400':
+          description: Validation error or invalid input.
+
+  /editAuction/{id}:
+    get:
+      summary: "R210: Edit Auction Page"
+      description: "Returns the view for editing an auction. Access: OWN"
+      operationId: R210
+      tags:
+        - 'M02: Auctions and Categories'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the auction to edit.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: HTML form for editing an auction.
+
+  /bid:
+    post:
+      summary: "R301: Place a Bid"
+      description: "Allows an authenticated user to place a bid on an auction. Access: USR"
+      operationId: R301
+      tags:
+        - "M03: Bids"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                auction_id:
+                  type: integer
+                  description: ID of the auction the bid is placed on.
+                  example: 1
+                bid_value:
+                  type: number
+                  description: The value of the bid to be placed. Must meet or exceed the minimum bid requirement.
+                  example: 150.00
+              required:
+                - auction_id
+                - bid_value
+      responses:
+        '200':
+          description: Bid placed successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Success message.
+                    example: Your bid has been placed successfully!
+        '400':
+          description: Validation error or business rule violation.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message.
+                    example: Bid must be at least €150.00.
+        '403':
+          description: Authorization failure (e.g., insufficient balance).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message.
+                    example: You do not have enough money for this bid!
+        '422':
+          description: Validation errors for input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    description: Validation errors.
+                    example:
+                      auction_id: ["The auction_id field is required."]
+                      bid_value: ["The bid_value must be a number."]
+  /addmoney:
+    get:
+      summary: "R401: Display the Add Money form"
+      description: "Returns the form where the user can enter their payment details to add money to their balance. Access: USR"
+      operationId: R401
+      tags:
+        - 'M04: Topups'
+      responses:
+        '200':
+          description: Successfully returns the "Add Money" form page.
+          content:
+            text/html:
+              schema:
+                type: string
+
+    post:
+      summary: "R402: Adding money to the user's balance"
+      description: "Validates the user's payment details and adds the specified amount to the user's balance. This operation also records the top-up transaction. Access: USR"
+      operationId: R402
+      tags:
+        - 'M04: Topups'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                card_number:
+                  type: string
+                  description: Credit card number (16 digits).
+                  minLength: 16
+                  maxLength: 16
+                expiration_date:
+                  type: string
+                  description: Expiration date of the credit card in the format MM/YY.
+                  pattern: '^(0[1-9]|1[0-2])\/[0-9]{2}$'
+                cvv:
+                  type: string
+                  description: Card security code (CVV, 3 digits).
+                  minLength: 3
+                  maxLength: 3
+                amount:
+                  type: number
+                  format: float
+                  description: The amount of money to add to the user's balance (must be greater than 0).
+              required:
+                - card_number
+                - expiration_date
+                - cvv
+                - amount
+      responses:
+        '200':
+          description: Successfully processed the top-up and updated the user's balance.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Money added successfully!"
+        '400':
+          description: Validation error due to incorrect or missing input data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "The given data was invalid."
+                  errors:
+                    type: object
+                    properties:
+                      card_number:
+                        type: array
+                        items:
+                          type: string
+                      expiration_date:
+                        type: array
+                        items:
+                          type: string
+                      cvv:
+                        type: array
+                        items:
+                          type: string
+                      amount:
+                        type: array
+                        items:
+                          type: string
+        '401':
+          description: Unauthorized request (if the user is not authenticated).
+        '500':
+          description: Internal server error.
+  /about:
+    get:
+      summary: "R501: About Page"
+      description: "Fetch the content of the About page. Access: PUB"
+      operationId: R501
+      tags:
+        - "M05: Static Pages"
+      responses:
+        '200':
+          description: The About page content.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "<html><body><h1>About Us</h1><p>This is the About page content.</p></body></html>"
+  /contacts:
+    get:
+      summary: "R502: Contacts Page"
+      description: "Fetch the content of the Contacts page. Access: PUB"
+      operationId: R502
+      tags:
+        - "M05: Static Pages"
+      responses:
+        '200':
+          description: The Contacts page content.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "<html><body><h1>Contact Us</h1><p>This is the Contacts page content.</p></body></html>"
+  /faq:
+    get:
+      summary: "R503: FAQ Page"
+      description: "Fetch the content of the FAQ page. Access: PUB"
+      operationId: R503
+      tags:
+        - "M05: Static Pages"
+      responses:
+        '200':
+          description: The FAQ page content.
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "<html><body><h1>FAQ</h1><p>This is the FAQ page content.</p></body></html>"
+  /admin/userlist:
+    get:
+      summary: "R601: View User List"
+      description: "Retrieve the list of all users for administrative purposes. Access: ADM"
+      operationId: R601
+      tags:
+        - "M06: Administration"
+      responses:
+        '200':
+          description: Successfully retrieved the user list.
+          content:
+            application/json:
+              schema:
+                type: array
+
+  /admin/auctionlist:
+    get:
+      summary: "R602: View Auction List"
+      description: "Retrieve the list of all auctions for administrative purposes. Access: ADM"
+      operationId: R602
+      tags:
+        - "M06: Administration"
+      responses:
+        '200':
+          description: Successfully retrieved the auction list.
+          content:
+            application/json:
+              schema:
+                type: array
+
+  /admin/bidlist/{id}:
+    get:
+      summary: "R603: View Bid List for an Auction"
+      description: "Retrieve all bids for a specific auction. Access: ADM"
+      operationId: R603
+      tags:
+        - "M06: Administration"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the auction.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully retrieved the bid list for the auction.
+          content:
+            application/json:
+              schema:
+                type: array
+
+  /update-ban/{id}:
+    put:
+      summary: "R604: Update User Ban Status"
+      description: "Toggle the banned status of a user. Access: ADM"
+      operationId: R604
+      tags:
+        - "M06: Administration"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the user.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully updated the ban status.
+        '403':
+          description: Authorization failed.
+
+  /update-admin/{id}:
+    put:
+      summary: "R605: Update User Admin Status"
+      description: "Toggle the admin status of a user. Access: ADM"
+      operationId: R605
+      tags:
+        - "M06: Administration"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the user.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully updated the admin status.
+        '403':
+          description: Authorization failed.
+
+  /update-status/{id}:
+    put:
+      summary: "R606: Update Auction Status"
+      description: "Update the status of an auction. Access: ADM"
+      operationId: R606
+      tags:
+        - "M06: Administration"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the auction.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum:
+                    - active
+                    - cancelled
+                    - sold
+                  example: active
+      responses:
+        '200':
+          description: Successfully updated the auction status.
+        '403':
+          description: Authorization failed.
+
+  /delete-auction/{id}:
+    delete:
+      summary: "R607: Delete Auction"
+      description: "Delete a specific auction. Access: ADM"
+      operationId: R607
+      tags:
+        - "M06: Administration"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the auction.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully deleted the auction.
+        '403':
+          description: Authorization failed.
+
+  /delete-bid/{id}/{aid}:
+    delete:
+      summary: "R608: Delete Bid"
+      description: "Delete a specific bid from an auction. Access: ADM"
+      operationId: R608
+      tags:
+        - "M06: Administration"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the bid.
+          schema:
+            type: integer
+        - name: aid
+          in: path
+          required: true
+          description: The ID of the auction.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully deleted the bid.
+        '403':
+          description: Authorization failed.  

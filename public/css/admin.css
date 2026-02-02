@@ -1,0 +1,433 @@
+.subtitle h1{
+    font-size: 2em;
+    font-weight:bold;
+    text-align: left;
+    color: #027782;
+}
+
+
+/*Admin page*/
+
+.admin-actions-container {
+    margin: 1em 0 0 0;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-action {
+    text-align: center;
+}
+
+
+/*User page*/
+
+.statistics {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 11.5em;
+}    
+
+.user-cards-container {
+    display: flex;
+    flex-direction: column; 
+    margin: 0 auto;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+    align-items: center;
+    margin-bottom: 1em;
+    background-color: #f9f9f9;
+    border: 0.0625rem solid #ddd;
+    border-radius: 0.5rem; 
+    box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1); 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-cards-container:hover {
+    transform: translateY(-0.3125rem); 
+    box-shadow: 0 0.5rem 0.9375rem rgba(0, 0, 0, 0.15); 
+}
+
+.user-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+    justify-content: flex-start;
+    text-align: center;
+    width: 34em;
+    padding: 1em;
+    gap: 1em;
+}
+
+.user-card-image-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.user-card-image img {
+    display: flex;
+    justify-content: center;
+    width: 120px ; 
+    border: 0.125rem solid #101012;
+    border-radius: 50%; 
+    object-fit: cover; 
+}
+
+.user-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    flex-grow: 1;
+}
+
+.user-card-text {
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    text-align: left;
+    display: flex;
+    color: #101012;
+    gap:0.2em;
+}
+
+
+.user-card h1{
+    font-size: 1.5em;
+    font-weight: bold;
+    line-height: 1,2;
+    word-break: break-word;
+    margin: 0;
+}
+
+.user-card h2 {
+    font-size: 1.2em;
+}
+
+
+.user-card-buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin-top: -1em;
+    height: 4em;
+    gap: 2em;
+}
+
+
+
+
+
+
+
+
+/* auctions list */
+
+.auction-card {
+    display: flex;
+    align-items: center;
+    border: 0.0625rem solid #ddd;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1); 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5em;
+    color: #101012;
+    background-color: #f9f9f9;
+    width: 34rem;
+    height: 12rem;
+    gap: 1rem;
+}
+
+.auction-card:hover {
+    transform: translateY(-0.3125rem); 
+    box-shadow: 0 0.5rem 0.9375rem rgba(0, 0, 0, 0.15); 
+}
+
+.auction-card img {
+    margin-left: 1em;
+    width: 9rem; 
+    height:9rem; 
+    border-radius: 0.5rem; 
+    object-fit: cover;
+    border: 0.125rem solid #ccc; 
+    flex-shrink: 0;
+}
+
+.auction-card-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: center;
+    justify-items: center;
+}
+
+
+.auction-card h1 {
+    font-weight: bold;
+    font-size: 1.5em;
+    padding-top: 0.5em;
+}
+
+.auction-card p {
+    font-size: 1.2em;
+    margin-top: -0.5rem;
+    line-height: 1;
+}
+
+.selector {
+    font-size: 1.2rem;
+    padding: 0;
+    width: 14em;
+}
+
+
+.auction-card-buttons-container {
+    margin-top: -1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.auction-card-buttons-container form{
+    margin: 0;
+}
+
+.auction-card-buttons-container a{
+    margin: 0;
+}
+
+
+
+
+
+/* bids list */
+
+.bid-cards-container {
+    display: flex;
+    flex-direction: column; 
+    margin: 0 auto;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.bid-card {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+    border: 0.0625rem solid #ddd;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1); 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin: 0 auto;
+    margin-top: 1rem;
+    color: #101012;
+    background-color: #f9f9f9;
+    width: 45em;
+    height: 9rem;
+    padding: 10px;
+    gap: 3.5em;
+}
+
+.bid-card:hover {
+    transform: translateY(-0.3125rem); 
+    box-shadow: 0 0.5rem 0.9375rem rgba(0, 0, 0, 0.15); 
+}
+
+.bid-card h1 {
+    font-weight: 600;
+    font-size: 40px;
+}
+
+.bid-card h2 {
+    font-size: 20px;
+    margin-top: -10px;
+}
+
+.bid-card-text {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 0 auto;
+    justify-content: center;
+    justify-items: center;
+}
+
+.bid-card-buttons-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    justify-content: center;
+    justify-items: center;
+    gap: 10px;
+}
+
+
+/*modals*/
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.6); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    animation: fadeIn 0.3s ease-in-out; 
+}
+
+.modal-content {
+    background-color: #ffffff; 
+    padding: 1em 2em;
+    border: 1px solid #ddd;
+    border-radius: 10px; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    width: 90%; 
+    max-width: 400px; 
+    text-align: center;
+    animation: slideIn 0.3s ease-out;
+    margin: 0;
+}
+
+.modal-content form {
+    margin: 0;
+}
+.modal-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333; 
+}
+
+.modal-content p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    color: #666; 
+    line-height: 1.2rem;
+}
+
+.modal-content-buttons {
+    display: flex; 
+    flex-direction: row; 
+    justify-content: center; 
+    gap: 1em; 
+    margin: 0;
+    padding: 0;
+}
+
+.modal-button {
+  display: block;
+  width: 8em; 
+  height: 2.5em;
+  font-size: 0.95em;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  background-color: #027782; 
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+  transform: skewX(-45deg);
+  transition: all 0.5s ease;
+  z-index: 0;
+}
+
+.modal-button:hover::before {
+  left: 100%;
+}
+
+.modal-button:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
+  color: #ffffff;
+}
+
+.delete-button {
+  display: block;
+  width: 8em; 
+  height: 2.5em;
+  font-size: 0.95em;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  background-color: #ff4141; 
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.delete-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+  transform: skewX(-45deg);
+  transition: all 0.5s ease;
+  z-index: 0;
+}
+
+.delete-button:hover::before {
+  left: 100%;
+}
+
+.delete-button:hover {
+  background-color: #ff4141;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
+  color: #ffffff;
+}
+
+.min-incr {
+    font-size: 12px;
+    margin-bottom: 1em;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

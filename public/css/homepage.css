@@ -1,0 +1,382 @@
+.categories-row-container {
+  overflow-x: scroll;
+  padding: 10px 0;
+  border-bottom: 1px solid #767676;
+  border-top: 1px solid #767676;
+}
+
+.categories-row-container::-webkit-scrollbar {
+  height: 0.6em;
+}
+
+
+
+.categories-row-container::-webkit-scrollbar-thumb {
+  background-color: #d6d6d6; 
+  border-radius: 10px; 
+  border: 2px solid #f4f5f6; 
+}
+
+.categories-row-container::-webkit-scrollbar-thumb:hover {
+  background-color: #979797; 
+}
+
+.categories-row {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1rem;
+  white-space: nowrap;
+}
+
+.category-link {
+  text-decoration: none;
+  color: #767676;
+  font-weight: bold;
+  font-size: 1em;
+  padding: 5px 10px;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.category-link:hover {
+  text-decoration: underline;
+  border-radius: 5px;
+}
+
+
+.carousel {
+    position: relative;
+    background: #027782;
+    height: 12em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+  }
+  
+  .carousel-content {
+    display: block;
+    position: absolute;
+    width: 100%;
+    transition: transform 0.5s ease;
+  }
+  
+  .carousel-content h1 {
+    font-weight: bold;
+    font-size: 2em;
+  }
+  
+  .carousel-content h3 {
+    margin-top: -10px;
+    font-size: 2em;
+  }
+  
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    background: transparent; 
+    border: none;
+    font-size: 2em; 
+    padding: 0; 
+    cursor: pointer;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    width: 50px;
+    height: 50px; 
+    transition: background 0.3s ease; 
+  }
+  
+  .carousel-arrow:hover {
+    background: transparent; 
+    color: white; 
+  }
+  
+  .carousel-arrow.left {
+    left: 10px;
+  }
+  
+  .carousel-arrow.right {
+    right: 10px;
+  }
+  
+
+
+
+.home-auctions-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 1em;
+    gap: 20px;
+    padding-left: 30px;
+}
+
+.home-auctions-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: left;
+    color: #027782;
+}
+
+
+.auctions {
+    display: flex;
+    align-items: center;
+    overflow-x: scroll;
+    gap: 3.8em;
+    flex-wrap: nowrap; 
+    max-width: 100%; 
+    padding: 10px 0;
+    margin-top: -50px;
+    height: 19em;
+}
+
+.auctions::-webkit-scrollbar {
+  height: 0.6em;
+}
+
+.auctions::-webkit-scrollbar-thumb {
+  background-color: #d6d6d6; 
+  border-radius: 10px; 
+  border: 2px solid #f4f5f6;
+}
+
+.auctions::-webkit-scrollbar-thumb:hover {
+  background-color: #979797; 
+}
+
+
+.home-auction-image {
+  width: 100%;  
+  height: 100%; 
+  object-fit: cover;
+  border-radius: 1em;
+}
+
+.home-auction {
+  flex: 0 0 auto;
+  width: 300px;
+  height: 200px;
+  border: 2px solid #101012;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  position: relative;
+}
+
+.home-auction-img {
+  width: 45px;
+  height: 45px;
+  border: 1px solid #101012;
+  border-radius: 40px;
+  position: absolute;
+  margin-top: -20px;
+  margin-left: 299px;
+}
+
+
+
+
+.home-auction-price {
+    position: absolute;
+    margin-top: 137.5px;
+    width: 100px;
+    height:52.5px;
+    background: #027782;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    font-size: 1.6em;
+    font-weight: 500;
+}
+
+.home-auction-current-bid {
+    position: absolute;
+    margin-top: 170px;
+    font-size: 0.7em;
+    font-weight: 500;
+    color: white;
+}
+
+.home-auction-text {
+    font-size: 1em;
+    position: absolute;
+    margin-top: 200px;
+    color: #101012;
+    font-weight: 400;
+}
+
+
+
+
+.home-categories-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 1em;
+    gap: 20px;
+    padding-left: 30px;
+}
+
+.home-categories-title {
+    font-size: 1.2em;
+    text-align: left;
+    color: #027782;
+    font-weight: bold;
+}
+
+
+.categories {
+    display: flex;
+    align-items: center;
+    overflow-x: scroll; 
+    gap: 3.8em;
+    flex-wrap: nowrap; 
+    max-width: 100%; 
+    padding: 10px 0;
+    margin-top: -50px;
+    height: 19em;
+}
+
+.categories::-webkit-scrollbar {
+  height: 0.6em;
+}
+
+.categories::-webkit-scrollbar-thumb {
+  background-color: #d6d6d6; 
+  border-radius: 10px; 
+  border: 2px solid #f4f5f6;
+}
+
+.categories::-webkit-scrollbar-thumb:hover {
+  background-color: #979797; 
+}
+
+
+.home-category {
+  flex: 0 0 auto;
+  width: 300px;
+  height: 200px;
+  border: 2px solid #101012;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  position: relative;
+}
+
+.home-category img{
+  width: 100%;  
+  height: 100%; 
+  object-fit: cover;
+  border-radius: 1em;
+}
+
+.home-category-text {
+    font-size: 1em;
+    position: absolute;
+    margin-top: 200px;
+    color: #101012;
+    font-weight: 400;
+}
+
+
+.error-alert {
+  font-size: 1.5rem; 
+  padding: 20px;    
+  border-radius: 10px; 
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  margin: 20px auto;
+  max-width: 1500px; 
+}
+
+@media (max-width: 768px) {
+  main > header {
+    display: flex;
+    flex-direction: column; 
+    padding: 1em 0.5em;
+  }
+
+  main > header .menu {
+    flex-direction: column; 
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    width: 100%;
+    margin-bottom: 1em;
+  }
+
+  main > header .menu .brand {
+    font-size: 30px;
+    text-align: left; 
+  }
+
+  main > header form {
+    justify-content: center;
+    width: 100%; 
+    margin: 0; 
+  }
+
+  main > header .right-section {
+    display: flex;
+    gap: 0.3em;
+    align-items: center;
+    flex-shrink: 0; 
+    position: absolute; 
+    top: 1em;
+    right: 0.5em;
+  }
+
+  .right-section .icon {
+    font-size: 17px;
+  }
+
+  main > header .profile img {
+    width: 2em;
+    cursor: pointer;
+    border: 1px solid #979797;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .categories-row-container {
+    padding: 5px 0;
+  }
+
+  .carousel{
+    height: 9em;
+  }
+
+  .carousel-content{
+    padding: 3em;
+  }
+
+  .carousel-content h1 {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+  }
+  .carousel-content h3 {
+    font-size: 1em;
+  }
+
+  .carousel-arrow.left {
+    font-size: 15px;
+    left:0;
+  }
+  
+  .carousel-arrow.right {
+    font-size: 15px;
+    right:0;
+  }
+}

@@ -1,0 +1,120 @@
+.reports-container {
+    max-width: 60rem;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: white;
+}
+
+.reports-container a {
+    color: #027782;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-tabs .nav-link{
+    color: #027782;
+    text-decoration: none;
+}
+
+.nav-tabs .nav-link:hover{
+    color: #027782;
+    text-decoration: none;
+}
+
+.reports-container a.active {
+    color: #FFFFFF;
+    background-color: #027782;
+}
+
+
+/* Tabela simples */
+.simple-table {
+    width: 100%; /* A tabela agora ocupa todo o espaço do container */
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 1rem;
+    background-color: #FFFFFF; /* Fundo branco */
+}
+
+.simple-table th,
+.simple-table td {
+    border: 1px solid #ddd; /* Borda discreta */
+    padding: 12px; /* Aumenta o espaço interno */
+    text-align: center;
+}
+
+.simple-table th {
+    background-color: #027782; /* Fundo azul congruente */
+    color: #FFFFFF; /* Texto branco */
+    font-weight: bold;
+}
+
+.simple-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Fundo alternado */
+}
+
+.simple-table tbody tr:hover {
+    background-color: #eef6f5; /* Destaque ao passar o mouse */
+}
+
+/* Link para o nome do item */
+.simple-table a {
+    text-decoration: none;
+    color: #027782; /* Azul congruente */
+    font-weight: bold;
+}
+
+.simple-table a:hover {
+    text-decoration: underline;
+    color: #025c62; /* Azul mais escuro */
+}
+
+/* Linha para quando não houver bids */
+.no-reports {
+    text-align: center;
+    font-size: 1rem;
+    color: #999;
+    font-style: italic;
+}
+
+
+/* Ajuste para as ações */
+.inline-form {
+    display: inline;
+    margin-right: 8px;
+}
+
+
+
+.report-filters {
+    display: flex;
+    justify-content: center; 
+    margin: 20px 0; 
+    background-color: white; 
+    padding: 10px;
+    border-radius: 8px; 
+}
+
+.report-filters ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px; 
+}
+
+.report-filters li {
+    margin: 0;
+}
+
+.report-filters a {
+    text-decoration: none;
+    padding: 8px 15px; 
+    border-radius: 4px; 
+    transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+.report-filters a:hover {
+    transform: translateY(-0.3125rem); 
+}
+
