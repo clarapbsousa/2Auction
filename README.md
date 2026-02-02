@@ -1,6 +1,4 @@
-# lbaw24094 - 2Auction
-
-## Product presentation
+# 2Auction
 
 2Auction is a web application that brings the excitement of live auctions to an online marketplace, helping users buy and sell items efficiently. It delivers a seamless, interactive experience, making online auctions accessible to everyone—from casual bidders to professional sellers.
 Our target audience includes bargain seekers, collectors looking for unique items, and businesses aiming to reach a wider market. 2Auction makes it easy to participate in auctions on either side of the transaction, offering a secure and engaging environment for trading.
@@ -29,6 +27,7 @@ You can login as a user and as an admin:
 Available on YouTube:
 
 https://www.youtube.com/watch?v=H6wyvfbYe4s
+
 
 
 For more details, check our wiki! The final version of the code is available at the tags section, named "PA".
